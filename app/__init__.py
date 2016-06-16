@@ -1,9 +1,17 @@
 from flask import Flask
+from eve import Eve
 from flask_sqlalchemy import SQLAlchemy
 from config import config
-
+from eve_sqlalchemy import SQL as _SQL
+from eve_sqlalchemy.validation import ValidatorSQL
 
 db = SQLAlchemy()
+
+
+class SQL(_SQL):
+    driver = db
+
+eve = Eve(validator=ValidatorSQL, data=SQL)
 
 
 def create_app(config_name):
